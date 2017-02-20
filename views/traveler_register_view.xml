@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_form_traveler_register" model="ir.ui.view">
+         <field name="name">view.form.traveler.register</field>
+         <field name="model">traveler.register</field>
+         <field name="arch" type="xml">
+            <form string="Registro de Viajeros">
+               <header>
+                  
+                  <!-- -name = funcion que llama en py  -->
+                  <button name="set_to_sent" type="object"
+                    attrs="{'invisible':[('state', '!=', 'draft')]}"
+                    string="Enviado" class="oe_highlight"/>
+                   
+                   <button name="send_register" type="object"
+                        attrs="{'invisible':[('state', '!=', 'printed')]}"
+                        string="Enviar Registro" class="oe_highlight"/>
+                   
+                   <field name="state" widget="statusbar" statusbar_visible="draft,printed,sent"
+                            statusbar_colors='{"draft":"blue","printed":"blue","sent":"blue"}'/>
+               </header>
+                        <sheet>
+                            <legend>Datos del Viajero</legend>
+                            <group>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="doc_number" required="1"/>
+                                    <field name="partner_id" />
+                                    <field name="doc_type"/>
+                                    <field name="document_date"/>
+                                    <field name="last_name1"/>
+                                    <field name="last_name2"/>
+                                    <field name="first_name"/>
+                                    <field name="user_id" readonly="1" />
+                                    <field name="tags_count"/>
+                                    <field name="tags_count_2"/>
+                                </group>
+                                <group>
+                                    <field name="gender" widget="radio"/>
+                                    <field name="birth_date"/>
+                                    <field name="birth_country"/>
+                                    <field name="entry_date"/>
+                                    <field name="company_id" string="Establecimiento"/> <!-- sobrescribimos la etiqueta -->
+                                    <field name="category_ids" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                
+                </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+
+                    </form>
+                </field>
+            </record>
+
+            <!-- List & Search View  -->
+            <record id="view_tree_traveler_register" model="ir.ui.view">
+             <field name="name">view.tree.traveler.register</field>
+             <field name="model">traveler.register</field>
+             <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft'; gray:state == 'printed';  back:state == 'sent';">
+                    <field name="name"/>
+                    <field name="doc_number"/>
+                    <field name="tags_count"/>
+                    <field name="tags_count_2"/>
+                    <field name="entry_date"/>
+                    <field name="last_name1"/>
+                    <field name="last_name2"/>
+
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Action to open To-do Task list -->
+        <record id="action_traveler_register" model="ir.actions.act_window">
+            <field name="name">Registro de Viajeros</field>
+            <field name="res_model">traveler.register</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Presione para crear nuevo Registro de Viajeros
+            </p>
+        </field>
+    </record>
+
+
+
+
+    <!-- Menu item to open To-do Task list -->
+    <menuitem id="traveler_register_menu_grand_parent"
+        name="Viajeros"
+        sequence="20"/>
+
+        <menuitem id="traveler_register_menu_parent"
+        name="Registro Viajeros"
+        parent="traveler_register_menu_grand_parent"
+        sequence="20"/>    
+
+
+    <menuitem id="traveler_register_menu"
+        name="Entrar Viajeros"
+        parent="traveler_register_menu_parent"
+        sequence="20"
+        action="action_traveler_register" />
+        
+    <menuitem id="traveler_report_menu"
+        name="Reportes"
+        parent="traveler_register_menu_parent"
+        sequence="21"
+        action="action_traveler_register" />    
+
+
+    </data>
+</odoo>

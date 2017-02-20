@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="mfh_hotel_traveler_register"
+            model="traveler.register"
+            string="Registro de Viajero"
+            report_type="qweb-pdf"
+            name="mfh_hotel.report_traveler_register"
+            file="mfh_hotel.report_traveler_register"
+        />
+        
+        <record id="mfh_hotel_traveler_register" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_euro_mfh"/>
+        </record>
+    </data>
+</openerp>
